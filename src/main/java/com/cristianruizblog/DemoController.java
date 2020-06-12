@@ -45,6 +45,62 @@ public class DemoController {
 		modelo.addAttribute("result",resultado);
 		return "menu";
 	}
+	
+	@RequestMapping("/get/cdr")
+	public String getNumberCDR(HttpServletRequest request){
+		String response="";
+		int number = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
+		int monthNumber = Integer.parseInt(request.getParameter("months.value"));
+		System.out.println("Numero de telefono: " + number);
+		System.out.println("Numero de mes: " + monthNumber);
+		try {
+			URL url = new URL(ARCHIVO_URL_SQL + "/" + number);
+			//URL url = new URL(ARCHIVO_URL_SQL + "/" + number + "/" + monthNumber);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			if(conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+			}
+			InputStreamReader in = new InputStreamReader(conn.getInputStream());
+			BufferedReader br = new BufferedReader(in);
+			String output;
+			//JSONObject data = json.loads(output);
+			while((output = br.readLine()) != null){
+				System.out.println(output.getClass().getSimpleName());
+				response += output;
+			}
+			
+			ricardo.setNombre(response);
+		} catch(Exception e) {
+			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	         System.exit(0);
+		}
+		/*
+		try {
+			URL url = new URL(ARCHIVO_URL_SQL + "/" + number + "/" + monthNumber);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			if(conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+			}
+			InputStreamReader in = new InputStreamReader(conn.getInputStream());
+			BufferedReader br = new BufferedReader(in);
+			String output;
+			//JSONObject data = json.loads(output);
+			while((output = br.readLine()) != null){
+				System.out.println(output.getClass().getSimpleName());
+				response += output;
+			}
+			
+			ricardo.setNombre(response);
+		} catch(Exception e) {
+			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	         System.exit(0);
+		}
+		*/
+		return "redirect:/invoice";
+	}
+	
 	/*
 	@RequestMapping(value = "/invoice")
 	public String showInvoice() {
@@ -53,10 +109,12 @@ public class DemoController {
 		return INVOICE_JSP;
 	}
 	*/
+	/*
 	@RequestMapping("/get/cdr")
 	public String getNumberCDR(HttpServletRequest request){
 		String response="";
 		int number = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
+		int date = Integer.parseInt(request.getParameter("month"));
 		System.out.println(number);
 		
 		try {
@@ -82,6 +140,8 @@ public class DemoController {
 		}
 		return "redirect:/invoice";
 	}
+	*/
+	
 	/*
 	@GetMapping("/invoice")
 	public String goToInvoice() {
@@ -92,24 +152,8 @@ public class DemoController {
 	@RequestMapping("/invoice")
 	public String goToInvoice(Model modelo,Usuario usuario) {
 		String resultado ="";
-		/*
-		if(usuario.getUsuario().isEmpty() || usuario.getContrasena().isEmpty()) {
-			resultado = "Fallido ambos campos son obligatorios";
-		}else {
-			resultado = "Yeah puedes entrar";
-		}
-		*/
 		resultado = ricardo.getNombre();
-		System.out.println("Ricardo dice: " + ricardo.getNombre());
 		modelo.addAttribute("result",resultado);
 		return "menu";
 	}
-	
-	/*
-	@RequestMapping(value = "/invoice")
-	public String showInvoice() {
-		//System.out.println(ricardo.getNombre());
-		return INVOICE_JSP;
-	}
-	*/
 }
