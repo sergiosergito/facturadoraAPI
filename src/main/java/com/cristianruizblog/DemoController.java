@@ -7,11 +7,16 @@ import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import Models.SoyUnico;
 
@@ -47,7 +52,51 @@ public class DemoController {
 	}
 	
 	@RequestMapping("/get/cdr")
-	public String getNumberCDR(HttpServletRequest request){
+	public String getNumberCDR(HttpServletRequest request, Model modelo){
+		
+		String response="";
+		int number = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
+		//int monthNumber = Integer.parseInt(request.getParameter("months.value"));
+		System.out.println("Numero de telefono: " + number);
+		//System.out.println("Numero de mes: " + monthNumber);
+		try {
+			URL url = new URL(ARCHIVO_URL_SQL + "/" + number);
+			//URL url = new URL(ARCHIVO_URL_SQL + "/" + number + "/" + monthNumber);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			if(conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP Error code : " + conn.getResponseCode());
+			}
+			InputStreamReader in = new InputStreamReader(conn.getInputStream());
+			BufferedReader br = new BufferedReader(in);
+			String output;
+			//JSONObject data = json.loads(output);
+			while((output = br.readLine()) != null){
+				
+				System.out.println(output.getClass().getSimpleName());
+				response += output;
+			}
+			System.out.println("++++++++++++++++++++++++++++++++");
+			JSONObject obj = new JSONObject(response);
+			System.out.println("*******************************");
+			JSONObject objLinea = (JSONObject) obj.get("linea");
+			JSONObject objPlan = (JSONObject) objLinea.get("plan");
+			
+			//JsonParser parser = new JsonParser();
+			//JsonElement data = parser.parse(output);
+			String numero = (String) objLinea.get("numero");
+			String nombreUsuario = (String) objLinea.get("nombreUsuario");
+			String nombrePlan = (String) objPlan.get("nombre");
+			modelo.addAttribute("numero",numero);
+			modelo.addAttribute("nombreUsuario",nombreUsuario);
+			modelo.addAttribute("nombrePlan",nombrePlan);
+			ricardo.setNombre(response);
+		} catch(Exception e) {
+			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	         System.exit(0);
+		}
+		
+		/*
 		String response="";
 		int number = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
 		int monthNumber = Integer.parseInt(request.getParameter("months.value"));
@@ -66,15 +115,19 @@ public class DemoController {
 			String output;
 			//JSONObject data = json.loads(output);
 			while((output = br.readLine()) != null){
+				
 				System.out.println(output.getClass().getSimpleName());
 				response += output;
 			}
-			
+			JsonParser parser = new JsonParser();
+			JsonElement data = parser.parse(output);
 			ricardo.setNombre(response);
 		} catch(Exception e) {
 			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 		}
+		*/	
+		
 		/*
 		try {
 			URL url = new URL(ARCHIVO_URL_SQL + "/" + number + "/" + monthNumber);
@@ -98,7 +151,8 @@ public class DemoController {
 	         System.exit(0);
 		}
 		*/
-		return "redirect:/invoice";
+		return "menu";
+		//return "redirect:/invoice";
 	}
 	
 	/*

@@ -13,6 +13,7 @@
 	  <label for="numero">Ingrese Numero de Telefono movil:</label>
 	  <input type="text" id="number" name="number"><br><br>
 	  <!--   <input type="month" id="month" name="month"> -->
+	  <!-- 
 	  <select name="months" id="cars">
 	    <option value="1">	Enero	</option>
 	    <option value="2">	Febrero	</option>
@@ -27,5 +28,6 @@
 	    <option value="11">	Noviembre</option>
 	    <option value="12">	Diciembre</option>
 	  </select>
+	   -->
 	  <input type="submit" value="Submit">
 </form>
