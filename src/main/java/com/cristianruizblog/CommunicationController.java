@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import Models.SoyUnico;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 //import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -52,8 +53,9 @@ public class CommunicationController {
 		return Arrays.asList(objects);
 	}
 	*/
+	/*
 	@RequestMapping("/get/cdr")
-	public void getNumberCDR(HttpServletRequest request){
+	public String getNumberCDR(HttpServletRequest request){
 		String response="";
 		int number = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
 		System.out.println(number);
@@ -78,9 +80,13 @@ public class CommunicationController {
 			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
 		}
-		
-		//ViewController view = new ViewController();
+		return "/foo";
 	}
+	*/
+	@RequestMapping("/foo")
+	  void handleFoo(HttpServletResponse response) throws IOException {
+	    response.sendRedirect("/menu");
+	  }
 	
 	/*
 	@RequestMapping("/mensaje")
