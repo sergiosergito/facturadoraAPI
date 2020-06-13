@@ -10,11 +10,9 @@
 -->
 
 <form action="get/cdr" method="get"><!-- cargar atributos a una ruta determinada, metodo 'get' no hay lio, post es para guardar en el servidor -->
-	  <label for="numero">Ingrese Numero de Telefono movil:</label>
+	  <label for="numero">Ingrese Número de Teléfono móvil: </label>
 	  <input type="text" id="number" name="number"><br><br>
-	  <!--   <input type="month" id="month" name="month"> -->
-	  <!-- 
-	  <select name="months" id="cars">
+	  <select name="months" id="months">
 	    <option value="1">	Enero	</option>
 	    <option value="2">	Febrero	</option>
 	    <option value="3">	Marzo	</option>
@@ -28,6 +26,6 @@
 	    <option value="11">	Noviembre</option>
 	    <option value="12">	Diciembre</option>
 	  </select>
-	   -->
+	   
 	  <input type="submit" value="Submit">
 </form>

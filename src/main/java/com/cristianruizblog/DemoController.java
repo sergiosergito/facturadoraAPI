@@ -23,8 +23,9 @@ import Models.SoyUnico;
 @Controller
 public class DemoController {
 
-	private final static String INVOICE_JSP = "invoice";
-	private static final String ARCHIVO_URL_SQL = "http://localhost:4567/sql/facturar";
+	private final static String MENU_JSP = "menu";
+	private static final String URL_ARCHIVO_TARIFICADORA = "http://localhost:4567/archivo/facturar";
+	private static final String URL_SQL_TARIFICADORA = "http://localhost:4567/sql/facturar";
 	SoyUnico ricardo = SoyUnico.getSingletonInstance("Ricardo Moya");
 	
 	@GetMapping("/")
@@ -48,20 +49,19 @@ public class DemoController {
 		}
 		
 		modelo.addAttribute("result",resultado);
-		return "menu";
+		return MENU_JSP;
 	}
 	
 	@RequestMapping("/get/cdr")
 	public String getNumberCDR(HttpServletRequest request, Model modelo){
 		
 		String response="";
-		int number = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
-		//int monthNumber = Integer.parseInt(request.getParameter("months.value"));
-		System.out.println("Numero de telefono: " + number);
-		//System.out.println("Numero de mes: " + monthNumber);
+		int lineNumber = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
+		int monthNumber = Integer.parseInt(request.getParameter("months"));
+		System.out.println("Numero de telefono: " + lineNumber);
+		System.out.println("Numero de mes: " + monthNumber);
 		try {
-			URL url = new URL(ARCHIVO_URL_SQL + "/" + number);
-			//URL url = new URL(ARCHIVO_URL_SQL + "/" + number + "/" + monthNumber);
+			URL url = new URL(URL_ARCHIVO_TARIFICADORA + "/" + lineNumber + "/" + monthNumber);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			if(conn.getResponseCode() != 200) {
@@ -72,10 +72,10 @@ public class DemoController {
 			String output;
 			//JSONObject data = json.loads(output);
 			while((output = br.readLine()) != null){
-				
-				System.out.println(output.getClass().getSimpleName());
+				//System.out.println(output.getClass().getSimpleName());
 				response += output;
 			}
+			System.out.println(response);
 			System.out.println("++++++++++++++++++++++++++++++++");
 			JSONObject obj = new JSONObject(response);
 			System.out.println("*******************************");
@@ -151,7 +151,7 @@ public class DemoController {
 	         System.exit(0);
 		}
 		*/
-		return "menu";
+		return MENU_JSP;
 		//return "redirect:/invoice";
 	}
 	
@@ -208,6 +208,6 @@ public class DemoController {
 		String resultado ="";
 		resultado = ricardo.getNombre();
 		modelo.addAttribute("result",resultado);
-		return "menu";
+		return MENU_JSP;
 	}
 }
