@@ -23,22 +23,26 @@ import Models.SoyUnico;
 @Controller
 public class DemoController {
 
+	private final static String ROOT = "/";
+	private final static String INDEX_JSP = "index";
+	private final static String INVOICE_FORM_JSP = "invoiceForm";
+	private final static String FACTURAR = "/facturar";
 	private final static String INVOICE_JSP = "invoice";
 	private static final String URL_ARCHIVO_TARIFICADORA = "http://localhost:4567/archivo/facturar";
 	private static final String URL_SQL_TARIFICADORA = "http://localhost:4567/sql/facturar";
 	SoyUnico ricardo = SoyUnico.getSingletonInstance("Ricardo Moya");
 	
-	@GetMapping("/")
+	@GetMapping(ROOT)
 	public String index() {
-		return "index";
+		return INDEX_JSP;
 	}
 	
-	@GetMapping("/login")
+	@GetMapping(FACTURAR)
 	public String login() {
-		return "loginForm";
+		return INVOICE_FORM_JSP;
 	}
 	
-	@PostMapping("/login")
+	@PostMapping(FACTURAR)
 	public String loginForm(Model modelo,Usuario usuario) {
 		String resultado ="";
 		
@@ -203,7 +207,7 @@ public class DemoController {
 		return "loginForm";
 	}
 	*/
-	
+	/*
 	@RequestMapping("/invoice")
 	public String goToInvoice(Model modelo,Usuario usuario) {
 		String resultado ="";
@@ -211,4 +215,5 @@ public class DemoController {
 		modelo.addAttribute("result",resultado);
 		return INVOICE_JSP;
 	}
+	*/
 }
