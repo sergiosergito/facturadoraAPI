@@ -23,7 +23,7 @@ import Models.SoyUnico;
 @Controller
 public class DemoController {
 
-	private final static String MENU_JSP = "menu";
+	private final static String INVOICE_JSP = "invoice";
 	private static final String URL_ARCHIVO_TARIFICADORA = "http://localhost:4567/archivo/facturar";
 	private static final String URL_SQL_TARIFICADORA = "http://localhost:4567/sql/facturar";
 	SoyUnico ricardo = SoyUnico.getSingletonInstance("Ricardo Moya");
@@ -49,7 +49,7 @@ public class DemoController {
 		}
 		
 		modelo.addAttribute("result",resultado);
-		return MENU_JSP;
+		return INVOICE_JSP;
 	}
 	
 	@RequestMapping("/get/cdr")
@@ -58,6 +58,7 @@ public class DemoController {
 		String response="";
 		int lineNumber = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
 		int monthNumber = Integer.parseInt(request.getParameter("months"));
+		//String persistenceType = (request.getParameter("persistence"));
 		System.out.println("Numero de telefono: " + lineNumber);
 		System.out.println("Numero de mes: " + monthNumber);
 		try {
@@ -151,7 +152,7 @@ public class DemoController {
 	         System.exit(0);
 		}
 		*/
-		return MENU_JSP;
+		return INVOICE_JSP;
 		//return "redirect:/invoice";
 	}
 	
@@ -208,6 +209,6 @@ public class DemoController {
 		String resultado ="";
 		resultado = ricardo.getNombre();
 		modelo.addAttribute("result",resultado);
-		return MENU_JSP;
+		return INVOICE_JSP;
 	}
 }

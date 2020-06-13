@@ -1,15 +1,15 @@
-<h1>Login Form</h1>
-<!--  
-<form action="login" method="post">
-	Nombre de usuario: <br/>
-	<input type="text" name="usuario"/>
-	Contrasena:
-	<input type="password" name="contrasena"/>
-	<input type="submit" value="login"/>
-</form>
--->
+<head>
+  <title>Formulario Facturadora API</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
 
 <form action="get/cdr" method="get"><!-- cargar atributos a una ruta determinada, metodo 'get' no hay lio, post es para guardar en el servidor -->
+	  <h1>Formulario para facturar</h1>
 	  <label for="numero">Ingrese Número de Teléfono móvil: </label>
 	  <input type="text" id="number" name="number"><br><br>
 	  <select name="months" id="months">
