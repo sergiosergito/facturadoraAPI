@@ -135,6 +135,15 @@
     
     <article>
       <h1>Detalle</h1>
+      <h1>Detalle</h1>
+	  <c:forEach items="${theHeader}" var="heads">
+	    <tr>      
+	        <td>
+	        	<c:out value="${heads}"/>
+	        </td>
+	    </tr>
+	  </c:forEach>
+	  <br>
 	  <c:forEach items="${list}" var="cdr">
 	    <tr>      
 	        <td>
@@ -142,8 +151,6 @@
 	        </td>
 	    </tr>
 	  </c:forEach>
-	  
-	  
       <h1>Total a pagar: ${total} Bs.</h1>
     </article>
   </section>

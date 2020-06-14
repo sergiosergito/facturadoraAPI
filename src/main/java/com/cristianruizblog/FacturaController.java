@@ -59,6 +59,7 @@ public class FacturaController {
 			String phrase = "";
 			double tarifa;
 			List<String> list = new ArrayList<String>();
+			List<String> header = createDetailHeader();
 			for(int i = 0; i < objCDRs.length(); i++){
 				phrase += objCDRs.getJSONObject(i).getString("telfDestino") + " ";
 	            phrase += objCDRs.getJSONObject(i).getString("fecha")  + " ";
@@ -83,6 +84,7 @@ public class FacturaController {
 			modelo.addAttribute("numero",numero);
 			modelo.addAttribute("nombreUsuario",nombreUsuario);
 			modelo.addAttribute("nombrePlan",nombrePlan);
+			modelo.addAttribute("theHeader", header);
 			modelo.addAttribute("list", list);
 			modelo.addAttribute("total", total);
 			ricardo.setNombre(response);
@@ -96,5 +98,15 @@ public class FacturaController {
 	public JSONObject generarJsonSegunDatosTarificadora(String datos) {
 		return null;
 		
+	}
+	
+	public List<String> createDetailHeader(){
+		List<String> header = new ArrayList();
+		header.add("Tel.Destino");
+		header.add("Fecha");
+		header.add("Hr.Llamada");
+		header.add("Duración");
+		header.add("Tarifa");
+		return header;
 	}
 }
