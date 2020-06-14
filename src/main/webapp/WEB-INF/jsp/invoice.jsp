@@ -127,14 +127,28 @@
         <li>${nombreUsuario}</li>
         <li>${nombrePlan}</li>
         <li>${numeroLinea}</li>
-        <li>Fecha: date</li>
+        <li>Fecha: 16-06-2020</li>
         <li>Factura Nro.0001</a></li>
         <li>Vence: 31-12-2020</a></li>
       </ul>
     </nav>
     
-    <article>
-      <h1>Detalle</h1>
+    <article>	
+     <table>
+		  <c:forEach items="${detail}" var="cdr">
+		    <tr>
+		      <td><c:out value="${cdr.telfDestino}" /><td>
+		      <td><c:out value="${cdr.fecha}" /><td>
+		      <td><c:out value="${cdr.horaLlamada}" /><td>
+		      <td><c:out value="${cdr.duracionLlamada}" /><td>
+		      <td><c:out value="${cdr.tarifa}" /><td>
+		    </tr>
+		  </c:forEach>
+	</table>
+    
+    
+    
+    <!-- 
       <h1>Detalle</h1>
 	  <c:forEach items="${theHeader}" var="heads">
 	    <tr>      
@@ -147,11 +161,12 @@
 	  <c:forEach items="${list}" var="cdr">
 	    <tr>      
 	        <td>
-	        	<c:out value="${cdr}"/>
+	        	<c:out value="${cdr}"/><br>
 	        </td>
 	    </tr>
 	  </c:forEach>
       <h1>Total a pagar: ${total} Bs.</h1>
+       -->
     </article>
   </section>
 

@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,17 +60,20 @@ public class FacturaController {
 			JSONArray objCDRs = (JSONArray) obj.get("listaCdrs");
 			String phrase = "";
 			double tarifa;
-			List<String> list = new ArrayList<String>();
-			List<String> header = createDetailHeader();
+			ArrayList  list = new ArrayList();
+			Map myMap = createDetailHeader();
+			list.add(myMap);
 			for(int i = 0; i < objCDRs.length(); i++){
-				phrase += objCDRs.getJSONObject(i).getString("telfDestino") + " ";
-	            phrase += objCDRs.getJSONObject(i).getString("fecha")  + " ";
-	            phrase += objCDRs.getJSONObject(i).getString("horaLlamada")  + " ";
-	            phrase += objCDRs.getJSONObject(i).getString("duracionLlamada")  + " ";
+				myMap = new HashMap();
+	            myMap.put("telfDestino", objCDRs.getJSONObject(i).getString("telfDestino"));
+	            phrase = objCDRs.getJSONObject(i).getString("fecha");
+	            myMap.put("fecha", phrase);
+	            myMap.put("horaLlamada", objCDRs.getJSONObject(i).getString("horaLlamada"));
+	            phrase = objCDRs.getJSONObject(i).getString("duracionLlamada");
+	            myMap.put("duracionLlamada", phrase);
 	            tarifa = objCDRs.getJSONObject(i).getDouble("tarifa");
-	            phrase += Double.toString(tarifa);
-	            list.add(phrase);
-	            phrase = "";
+	            myMap.put("tarifa",Double.toString(tarifa));
+	            list.add(myMap);
 			}
 			
 			for(int i = 0; i <list.size(); i++) {
@@ -84,8 +89,8 @@ public class FacturaController {
 			modelo.addAttribute("numero",numero);
 			modelo.addAttribute("nombreUsuario",nombreUsuario);
 			modelo.addAttribute("nombrePlan",nombrePlan);
-			modelo.addAttribute("theHeader", header);
-			modelo.addAttribute("list", list);
+			//modelo.addAttribute("theHeader", header);
+			modelo.addAttribute("detail", list);
 			modelo.addAttribute("total", total);
 			ricardo.setNombre(response);
 		} catch(Exception e) {
@@ -100,13 +105,13 @@ public class FacturaController {
 		
 	}
 	
-	public List<String> createDetailHeader(){
-		List<String> header = new ArrayList();
-		header.add("Tel.Destino");
-		header.add("Fecha");
-		header.add("Hr.Llamada");
-		header.add("Duración");
-		header.add("Tarifa");
+	public Map createDetailHeader(){
+		Map header = new HashMap();
+		header.put("telfDestino","telfDestino");
+		header.put("fecha","fecha");
+		header.put("horaLlamada","horaLlamada");
+		header.put("duracionLlamada","duracionLlamada");
+		header.put("tarifa","tarifa");
 		return header;
 	}
 }
