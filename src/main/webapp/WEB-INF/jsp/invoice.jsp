@@ -130,7 +130,8 @@
         <li>Vence: 31-12-2020</a></li>
       </ul>
     </nav>
-    <article>	
+    <article>
+    	<h1>Detalle</h1>	
 	     <table>
 			  <c:forEach items="${detail}" var="cdr">
 			    <tr>
