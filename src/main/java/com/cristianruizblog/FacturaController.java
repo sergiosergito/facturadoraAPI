@@ -53,7 +53,7 @@ public class FacturaController {
 				response += output;
 			}
 			JSONObject obj = new JSONObject(response);
-			JSONObject objLinea = (JSONObject) obj.get("linea");
+			JSONObject objLinea = (JSONObject) obj.get("lineaTelefonica");
 			JSONObject objPlan = (JSONObject) objLinea.get("plan");
 			JSONArray objCDRs = (JSONArray) obj.get("listaCdrs");
 			String phrase = "";
@@ -70,6 +70,11 @@ public class FacturaController {
 	            phrase = "";
 			}
 			
+			for(int i = 0; i <list.size(); i++) {
+				System.out.println("list: " + i + " "+ list.get(i));
+			} 
+			
+			
 			String numero = (String) objLinea.get("numero");
 			String nombreUsuario = (String) objLinea.get("nombreUsuario");
 			String nombrePlan = (String) objPlan.get("nombre");
@@ -78,7 +83,7 @@ public class FacturaController {
 			modelo.addAttribute("numero",numero);
 			modelo.addAttribute("nombreUsuario",nombreUsuario);
 			modelo.addAttribute("nombrePlan",nombrePlan);
-			modelo.addAttribute("listCDRs", list);
+			modelo.addAttribute("list", list);
 			modelo.addAttribute("total", total);
 			ricardo.setNombre(response);
 		} catch(Exception e) {

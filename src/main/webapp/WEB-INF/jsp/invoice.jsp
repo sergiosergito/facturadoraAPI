@@ -5,6 +5,7 @@
 <title>Facturadora API</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
     * {
       box-sizing: border-box;
@@ -98,7 +99,7 @@
 	      <form action="javascript:window.print()">
 	          <input class = "button" type="submit" value="Imprimir" />
 	      </form>
-	      <form action="href:/" style="float:right;">
+	      <form action="/" method="get" style="float:right;">
 	          <input class = "button button2" type="submit" value="Volver a facturar" />
 	      </form>
 	  </div>
@@ -134,30 +135,16 @@
     
     <article>
       <h1>Detalle</h1>
-      
- 
-	  <c:forEach items="${listCDRs}" var="cdr">
+	  <c:forEach items="${list}" var="cdr">
 	    <tr>      
-	        <td>${cdr.telfDestino}</td>
-	        <td>${cdr.fecha}</td>
-	        <td>${cdr.horaLlamada}</td>
-	        <td>${cdr.duracionLlamada}</td>
-	        <td>${cdr.tarifa}</td>  
+	        <td>
+	        	<c:out value="${cdr}"/>
+	        </td>
 	    </tr>
 	  </c:forEach>
 	  
-	  	<ul>
-    		<c:forEach var="cdr" items="${listCDRs}">
-      		<td>${cdr.telfDestino}</td>
-	        <td>${cdr.fecha}</td>
-	        <td>${cdr.horaLlamada}</td>
-	        <td>${cdr.duracionLlamada}</td>
-	        <td>${cdr.tarifa}</td>  
-    		</c:forEach>
-    	</ul>
 	  
-	  
-      <h1>Total: ${total} </h1>
+      <h1>Total a pagar: ${total} Bs.</h1>
     </article>
   </section>
 
