@@ -28,12 +28,12 @@ public class FacturaController {
 	private final static String URL_TARIFICADORA = "http://localhost:4567/";
 	private static final String URL_ARCHIVO_TARIFICADORA = "http://localhost:4567/archivo/facturar";
 	private static final String URL_SQL_TARIFICADORA = "http://localhost:4567/sql/facturar";
-	SoyUnico ricardo = SoyUnico.getSingletonInstance("Ricardo Moya");
 	
 	@GetMapping(ROOT)
 	public String index() {
 		return INVOICE_FORM_JSP;
 	}
+	
 	@RequestMapping("/get/cdr")
 	public String getNumberCDR(HttpServletRequest request, Model modelo){
 		
@@ -75,24 +75,15 @@ public class FacturaController {
 	            myMap.put("tarifa",Double.toString(tarifa));
 	            list.add(myMap);
 			}
-			
-			for(int i = 0; i <list.size(); i++) {
-				System.out.println("list: " + i + " "+ list.get(i));
-			} 
-			
-			
 			String numero = (String) objLinea.get("numero");
 			String nombreUsuario = (String) objLinea.get("nombreUsuario");
 			String nombrePlan = (String) objPlan.get("nombre");
-			
 			double total = (double) obj.get("totalAPagar");
 			modelo.addAttribute("numero",numero);
 			modelo.addAttribute("nombreUsuario",nombreUsuario);
 			modelo.addAttribute("nombrePlan",nombrePlan);
-			//modelo.addAttribute("theHeader", header);
 			modelo.addAttribute("detail", list);
 			modelo.addAttribute("total", total);
-			ricardo.setNombre(response);
 		} catch(Exception e) {
 			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);

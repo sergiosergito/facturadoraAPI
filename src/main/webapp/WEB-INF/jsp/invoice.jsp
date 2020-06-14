@@ -104,8 +104,6 @@
 	      </form>
 	  </div>
   </header>
-
-  
   <section>
     <nav>
         <strong>Dream Team</strong><br>
@@ -132,44 +130,21 @@
         <li>Vence: 31-12-2020</a></li>
       </ul>
     </nav>
-    
     <article>	
-     <table>
-		  <c:forEach items="${detail}" var="cdr">
-		    <tr>
-		      <td><c:out value="${cdr.telfDestino}" /><td>
-		      <td><c:out value="${cdr.fecha}" /><td>
-		      <td><c:out value="${cdr.horaLlamada}" /><td>
-		      <td><c:out value="${cdr.duracionLlamada}" /><td>
-		      <td><c:out value="${cdr.tarifa}" /><td>
-		    </tr>
-		  </c:forEach>
-	</table>
-    
-    
-    
-    <!-- 
-      <h1>Detalle</h1>
-	  <c:forEach items="${theHeader}" var="heads">
-	    <tr>      
-	        <td>
-	        	<c:out value="${heads}"/>
-	        </td>
-	    </tr>
-	  </c:forEach>
-	  <br>
-	  <c:forEach items="${list}" var="cdr">
-	    <tr>      
-	        <td>
-	        	<c:out value="${cdr}"/><br>
-	        </td>
-	    </tr>
-	  </c:forEach>
-      <h1>Total a pagar: ${total} Bs.</h1>
-       -->
+	     <table>
+			  <c:forEach items="${detail}" var="cdr">
+			    <tr>
+			      <td><c:out value="${cdr.telfDestino}" /><td>
+			      <td><c:out value="${cdr.fecha}" /><td>
+			      <td><c:out value="${cdr.horaLlamada}" /><td>
+			      <td><c:out value="${cdr.duracionLlamada}" /><td>
+			      <td><c:out value="${cdr.tarifa}" /><td>
+			    </tr>
+			  </c:forEach>
+		</table>
+	    <h1>Total a pagar: ${total} Bs.</h1>
     </article>
   </section>
-
   <footer>
     <p>DreamTeam</p>
   </footer>
