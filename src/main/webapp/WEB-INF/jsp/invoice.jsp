@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <title>Facturadora API</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,6 +13,21 @@
     body {
       font-family: Arial, Helvetica, sans-serif;
     }
+    
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    
+    .button2 {background-color: #f44336;} /* Red */
 
         .container {
       width: 800px;
@@ -77,11 +93,15 @@
 </head>
 <body>
   <header>
-      <h2>Facturadora API</h2>
-      <form action="javascript:window.print()">
-          <input type="submit" value="Imprimir" />
-      </form>
-
+	  <h2>Facturadora API</h2>
+	  <div style="display:inline-flex;">
+	      <form action="javascript:window.print()">
+	          <input class = "button" type="submit" value="Imprimir" />
+	      </form>
+	      <form action="href:/" style="float:right;">
+	          <input class = "button button2" type="submit" value="Volver a facturar" />
+	      </form>
+	  </div>
   </header>
 
   
@@ -99,8 +119,6 @@
       </nav>
   </section>
 
-  
-
   <section>
     <nav>
       <ul>
@@ -109,20 +127,42 @@
         <li>${nombrePlan}</li>
         <li>${numeroLinea}</li>
         <li>Fecha: date</li>
-        <li>Factura:  0001</a></li>
+        <li>Factura Nro.0001</a></li>
         <li>Vence: 31-12-2020</a></li>
       </ul>
     </nav>
     
     <article>
-      <h1>London</h1>
-      <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-      <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
+      <h1>Detalle</h1>
+      
+ 
+	  <c:forEach items="${listCDRs}" var="cdr">
+	    <tr>      
+	        <td>${cdr.telfDestino}</td>
+	        <td>${cdr.fecha}</td>
+	        <td>${cdr.horaLlamada}</td>
+	        <td>${cdr.duracionLlamada}</td>
+	        <td>${cdr.tarifa}</td>  
+	    </tr>
+	  </c:forEach>
+	  
+	  	<ul>
+    		<c:forEach var="cdr" items="${listCDRs}">
+      		<td>${cdr.telfDestino}</td>
+	        <td>${cdr.fecha}</td>
+	        <td>${cdr.horaLlamada}</td>
+	        <td>${cdr.duracionLlamada}</td>
+	        <td>${cdr.tarifa}</td>  
+    		</c:forEach>
+    	</ul>
+	  
+	  
+      <h1>Total: ${total} </h1>
     </article>
   </section>
 
   <footer>
-    <p>Footer</p>
+    <p>DreamTeam</p>
   </footer>
 
 </body>
