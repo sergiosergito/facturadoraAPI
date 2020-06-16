@@ -7,7 +7,7 @@
   	header {
       background-color: #666;
       padding: 10px;
-      text-align: right;
+      text-align: center;
       font-size: 20px;
       color: white;
     }
@@ -24,7 +24,7 @@
       cursor: pointer;
     }
 	    input[type=text], select {
-	  width: 100%;
+	  width: 50%;
 	  padding: 12px 20px;
 	  margin: 8px 0;
 	  display: inline-block;
@@ -63,9 +63,20 @@
 	<header>
 	  	<h2>Formulario para facturar</h2>
 	</header>
-	<form action="get/cdr" method="get">
-		  <label for="numero">Ingrese Número de Teléfono móvil: </label>
+	<form action="/getcdr" method="get" style="text-align:center;">
+		  <br></br>
+		  <label for="persistencia">Seleccione repositorio: </label>
+		  <br></br>
+		  <select class="form-control" name="persistence" id="persistence">
+		    <option value="sql">	SQL	</option>
+		    <option value="archivo">	Archivos	</option>
+		  </select>
+		  <br></br>
+		  <label for="numero">Ingrese Numero de Telefono movil: </label>
+		  <br></br>
 		  <input type="text" id="number" name="number"><br><br>
+		  <label for="mes">Seleccione Mes: </label>
+		  <br></br>
 		  <select name="months" id="months">
 		    <option value="1">	Enero	</option>
 		    <option value="2">	Febrero	</option>
@@ -80,7 +91,8 @@
 		    <option value="11">	Noviembre</option>
 		    <option value="12">	Diciembre</option>
 		  </select>
-		   
+		  <br></br>
 		  <input type="submit" value="Facturar">
 	</form>
+	<li>${mensaje}</li>
 </body>

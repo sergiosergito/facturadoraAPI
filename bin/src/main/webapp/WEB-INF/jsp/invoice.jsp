@@ -131,10 +131,20 @@
       </ul>
     </nav>
     <article>
-    	<h1>Llamadas realizadas en ${mes}: ${cantidadLlamadas} </h1>
+    	<h1>Detalle</h1>	
+	     <table>
+			  <c:forEach items="${detail}" var="cdr">
+			    <tr>
+			      <td><c:out value="${cdr.telfDestino}" /><td>
+			      <td><c:out value="${cdr.fecha}" /><td>
+			      <td><c:out value="${cdr.horaLlamada}" /><td>
+			      <td><c:out value="${cdr.duracionLlamada}" /><td>
+			      <td><c:out value="${cdr.tarifa}" /><td>
+			    </tr>
+			  </c:forEach>
+		</table>
 	    <h1>Total a pagar: ${total} Bs.</h1>
-	    
-    </article> 
+    </article>
   </section>
   <footer>
     <p>DreamTeam</p>

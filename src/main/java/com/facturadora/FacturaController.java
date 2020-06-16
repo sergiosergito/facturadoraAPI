@@ -4,14 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormatSymbols;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,23 +21,22 @@ public class FacturaController {
 	private final static String INVOICE_FORM_JSP = "invoiceForm";
 	private final static String INVOICE_JSP = "invoice";
 	private final static String URL_TARIFICADORA = "http://localhost:4567/";
-	private static final String URL_ARCHIVO_TARIFICADORA = "http://localhost:4567/archivo/facturar";
-	private static final String URL_SQL_TARIFICADORA = "http://localhost:4567/sql/facturar";
+	
 	
 	@GetMapping(ROOT)
 	public String index() {
 		return INVOICE_FORM_JSP;
 	}
 	
-	@RequestMapping("/get/cdr")
+	@RequestMapping("/getcdr")
 	public String getNumberCDR(HttpServletRequest request, Model modelo){
 		
 		String response = "";
 		int lineNumber = Integer.parseInt(request.getParameter("number"));//Esta apuntando al input, con el name number
 		int monthNumber = Integer.parseInt(request.getParameter("months"));
+		String persistencia= request.getParameter("persistence");
 		try {
-			//URL url = new URL(URL_TARIFICADORA + persistencia + "/facturar"+ "/" + lineNumber + "/" + monthNumber);
-			URL url = new URL(URL_ARCHIVO_TARIFICADORA + "/" + lineNumber + "/" + monthNumber);
+			URL url = new URL(URL_TARIFICADORA + persistencia + "/facturar"+ "/" + lineNumber + "/" + monthNumber);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			if(conn.getResponseCode() != 200) {
@@ -54,26 +49,15 @@ public class FacturaController {
 				response += output;
 			}
 			JSONObject obj = new JSONObject(response);
+			
+				if(response.contains("{}")) {
+					modelo.addAttribute("mensaje","Linea no registrada en sistema");
+					return INVOICE_FORM_JSP;
+				}
+				
 			JSONObject objLinea = (JSONObject) obj.get("lineaTelefonica");
 			JSONObject objPlan = (JSONObject) objLinea.get("plan");
-			JSONArray objCDRs = (JSONArray) obj.get("listaCdrs");
-			String phrase = "";
-			double tarifa;
-			ArrayList  list = new ArrayList();
-			Map myMap = createDetailHeader();
-			list.add(myMap);
-			for(int i = 0; i < objCDRs.length(); i++){
-				myMap = new HashMap();
-	            myMap.put("telfDestino", objCDRs.getJSONObject(i).getString("telfDestino"));
-	            phrase = objCDRs.getJSONObject(i).getString("fecha");
-	            myMap.put("fecha", phrase);
-	            myMap.put("horaLlamada", objCDRs.getJSONObject(i).getString("horaLlamada"));
-	            phrase = objCDRs.getJSONObject(i).getString("duracionLlamada");
-	            myMap.put("duracionLlamada", phrase);
-	            tarifa = objCDRs.getJSONObject(i).getDouble("tarifa");
-	            myMap.put("tarifa",Double.toString(tarifa));
-	            list.add(myMap);
-			}
+			int cantidadLlamadas=(int) obj.get("cantLlamadas");
 			String numero = (String) objLinea.get("numero");
 			String nombreUsuario = (String) objLinea.get("nombreUsuario");
 			String nombrePlan = (String) objPlan.get("nombre");
@@ -81,8 +65,9 @@ public class FacturaController {
 			modelo.addAttribute("numero",numero);
 			modelo.addAttribute("nombreUsuario",nombreUsuario);
 			modelo.addAttribute("nombrePlan",nombrePlan);
-			modelo.addAttribute("detail", list);
-			modelo.addAttribute("total", total);
+			modelo.addAttribute("cantidadLlamadas", cantidadLlamadas);
+			modelo.addAttribute("total", String.format("%.2f",total));
+			modelo.addAttribute("mes", new DateFormatSymbols().getMonths()[monthNumber-1]);
 		} catch(Exception e) {
 			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	         System.exit(0);
@@ -90,18 +75,4 @@ public class FacturaController {
 		return INVOICE_JSP;
 	}
 	
-	public JSONObject generarJsonSegunDatosTarificadora(String datos) {
-		return null;
-		
-	}
-	
-	public Map createDetailHeader(){
-		Map header = new HashMap();
-		header.put("telfDestino","telfDestino");
-		header.put("fecha","fecha");
-		header.put("horaLlamada","horaLlamada");
-		header.put("duracionLlamada","duracionLlamada");
-		header.put("tarifa","tarifa");
-		return header;
-	}
 }
