@@ -74,7 +74,7 @@
 		  <br></br>
 		  <label for="numero">Ingrese Numero de Telefono movil: </label>
 		  <br></br>
-		  <input type="text" id="number" name="number"><br><br>
+		  <input type="number" id="number" name="number" required><br><br>
 		  <label for="mes">Seleccione Mes: </label>
 		  <br></br>
 		  <select name="months" id="months">
