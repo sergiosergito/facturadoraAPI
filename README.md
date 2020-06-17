@@ -1,13 +1,10 @@
-# CristianRuizBlog-SpringBootMVC_JSP
-Example Spring Boot + MVC + JSP (and Devtools)
-
-Encontraras Un ejemplo paso a paso para crear una WEB MVC y JSP usando Spring Boot.
+# Facturadora utilizando java, spring y archivos jsp para vistas
 
 Puntos principales:
 
 
-- Crear Proyecto
-- Configurar proyecto para que interprete JSP
-- Renderizacion de las paginas JSP
-- Navegacion y paso de informacion entre cliente y servidor
-- BONUS: Uso de DEVTOOLS
+- En el formulario inicial es necesario: 
+  - Ingresar un dato numerico, en este caso un numero de linea telefonica.
+  - Seleccionar un tipo de repositorio de los datos.
+  - Seleccinoar el mes del caul se realizara la facturacion.
+
